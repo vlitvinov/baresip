@@ -955,6 +955,21 @@ int stream_update(struct stream *s)
 }
 
 
+/**
+ * Calls the transmission rekeying handler of the media encryption
+ *
+ * @param strm Stream to rekey
+ */
+void stream_remove_menc_media_state(struct stream *strm)
+{
+	if (!strm)
+		return;
+
+	if (strm->menc->txrekeyh)
+		strm->menc->txrekeyh(strm->mes);
+}
+
+
 void stream_update_encoder(struct stream *s, int pt_enc)
 {
 	if (!s)
@@ -1055,10 +1070,20 @@ void stream_flush(struct stream *s)
 
 void stream_enable_rtp_timeout(struct stream *strm, uint32_t timeout_ms)
 {
+	struct sdp_media *m;
+
 	if (!strm)
 		return;
 
-	if (!sdp_media_has_media(stream_sdpmedia(strm)))
+	m = stream_sdpmedia(strm);
+	if (!sdp_media_has_media(m))
+		return;
+
+	if (sdp_media_disabled(m))
+		return;
+
+	const struct sdp_format *sc = sdp_media_rformat(m, NULL);
+	if (!sc || !sc->data)
 		return;
 
 	strm->rxm.rtp_timeout = timeout_ms;

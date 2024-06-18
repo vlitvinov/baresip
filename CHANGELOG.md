@@ -5,9 +5,67 @@ All notable changes to baresip will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 3.12.0 - 2024-05-15
+
+## What's Changed
+* video: stream enable/disable for re-INVITE/UPDATE by @cspiel1 in https://github.com/baresip/baresip/pull/2982
+* srtp: allow rekeying of running streams by @cHuberCoffee in https://github.com/baresip/baresip/pull/2975
+* audio: remove stop_aur() by @cspiel1 in https://github.com/baresip/baresip/pull/2991
+* HAVE_INET6 is always defined by @alfredh in https://github.com/baresip/baresip/pull/2992
+* audio: respect SDP media disabled flag by @cspiel1 in https://github.com/baresip/baresip/pull/2997
+* test: fix test_message() by @alfredh in https://github.com/baresip/baresip/pull/2995
+* avformat: do not use deprecated avcodec_close() by @cspiel1 in https://github.com/baresip/baresip/pull/3002
+* ua: enforce magic cookie in Via branch by @maximilianfridrich in https://github.com/baresip/baresip/pull/3003
+* uag: fix initializer by @cspiel1 in https://github.com/baresip/baresip/pull/3001
+* misc: cppcheck fixes by @alfredh in https://github.com/baresip/baresip/pull/3007
+* readme: fix lint status badge by @sreimers in https://github.com/baresip/baresip/pull/3008
+* video: enable/disable stream at common point by @cspiel1 in https://github.com/baresip/baresip/pull/3010
+* srtp: deactivate test_call_srtp_tx_rekey by @cHuberCoffee in https://github.com/baresip/baresip/pull/3013
+* g722,g726: use SYSTEM spandsp include by @sreimers in https://github.com/baresip/baresip/pull/3017
+* srtp: lock possible re-keying against usage in receive handler by @cHuberCoffee in https://github.com/baresip/baresip/pull/3012
+* mc: move multicast to baresip-apps by @cspiel1 in https://github.com/baresip/baresip/pull/3015
+* call,audio: remove audio start/stop redundancy by @cspiel1 in https://github.com/baresip/baresip/pull/2999
+* aufile: use correct audio format S16LE for aubuf frames by @alfredh in https://github.com/baresip/baresip/pull/3020
+* ci: bump pr dependency action by @sreimers in https://github.com/baresip/baresip/pull/3023
+* docs,core: remove reference to multicast by @alfredh in https://github.com/baresip/baresip/pull/3019
+* bump version by @alfredh in https://github.com/baresip/baresip/pull/3027
+
+
+**Full Changelog**: https://github.com/baresip/baresip/compare/v3.11.0...v3.12.0
+
+
+## 3.11.0 - 2024-04-09
+
+### What's Changed
+* account: read catchall flag from accounts file by @cspiel1 in https://github.com/baresip/baresip/pull/2925
+* vp8/encode: optimizations and target_bitrate fix by @sreimers in https://github.com/baresip/baresip/pull/2936
+* vp8,vp9: fix deprecated decode codec init by @sreimers in https://github.com/baresip/baresip/pull/2952
+* aureceiver: fix mtx_unlock on discard by @sreimers in https://github.com/baresip/baresip/pull/2955
+* release v3.10.1 by @sreimers in https://github.com/baresip/baresip/pull/2958
+* message: return 403 instead of 488 by @maximilianfridrich in https://github.com/baresip/baresip/pull/2953
+* netroam/cmake: add optional netlink detection by @sreimers in https://github.com/baresip/baresip/pull/2960
+* ci/sanitizers: add mmap rnd_bits workaround by @sreimers in https://github.com/baresip/baresip/pull/2967
+* account: set inreq_allowed=yes as default by @maximilianfridrich in https://github.com/baresip/baresip/pull/2961
+* account: use correct format %zu for printing outbound by @maximilianfridrich in https://github.com/baresip/baresip/pull/2963
+* stream: fix empty rtcp_stats for rtx.ssrc reception reports by @sreimers in https://github.com/baresip/baresip/pull/2969
+* stream: avoid sanitizer warnings for strm->tx by @cspiel1 in https://github.com/baresip/baresip/pull/2949
+* avcodec: remove re_h264 extra header by @sreimers in https://github.com/baresip/baresip/pull/2971
+* play: err handling and ensure eof by @cspiel1 in https://github.com/baresip/baresip/pull/2972
+* stream: add stream_jbuf_stats()  by @sreimers in https://github.com/baresip/baresip/pull/2973
+* sndfile: write correct sample rate to WAV header by @cspiel1 in https://github.com/baresip/baresip/pull/2976
+* tls: add session resumption setter by @maximilianfridrich in https://github.com/baresip/baresip/pull/2977
+* avcodec: use util function to decode H.264 STAP-A by @alfredh in https://github.com/baresip/baresip/pull/2978
+* mixausrc: fix ausrc resampling by @cspiel1 in https://github.com/baresip/baresip/pull/2981
+* ci/build: remove obsolete for loop by @cspiel1 in https://github.com/baresip/baresip/pull/2985
+
+
+**Full Changelog**: https://github.com/baresip/baresip/compare/v3.10.1...v3.11.0
+
+
 ## 3.10.1 - 2024-03-12
 
-* aureceiver: fix mtx_unlock on discard by @sreimers in https://github.com/baresip/baresip/pull/2955
+* aureceiver: security fix mtx_unlock on discard by @sreimers in https://github.com/baresip/baresip/pull/2955
+
 
 ## 3.10.0 - 2024-03-06
 

@@ -13,7 +13,7 @@ extern "C" {
 
 
 /** Defines the Baresip version string */
-#define BARESIP_VERSION "3.10.1"
+#define BARESIP_VERSION "3.12.1"
 
 
 #ifndef NET_MAX_NS
@@ -362,6 +362,7 @@ struct config_sip {
 	enum sip_transp transp; /**< Default outgoing SIP transport protocol */
 	bool verify_server;     /**< Enable SIP TLS verify server   */
 	bool verify_client;     /**< Enable SIP TLS verify client   */
+	enum tls_resume_mode tls_resume; /** TLS resumption mode    */
 	uint8_t tos;            /**< Type-of-Service for SIP        */
 };
 
@@ -570,6 +571,7 @@ struct ausrc_prm {
 	uint8_t    ch;          /**< Number of channels         */
 	uint32_t   ptime;       /**< Wanted packet-time in [ms] */
 	int        fmt;         /**< Sample format (enum aufmt) */
+	size_t     duration;    /**< Duration in [ms], 0 for infinite        */
 };
 
 typedef void (ausrc_read_h)(struct auframe *af, void *arg);
@@ -751,6 +753,8 @@ typedef int  (menc_media_h)(struct menc_media **mp, struct menc_sess *sess,
 			   struct sdp_media *sdpm,
 			   const struct stream *strm);
 
+typedef int (menc_txrekey_h)(struct menc_media *m);
+
 struct menc {
 	struct le le;
 	const char *id;
@@ -758,6 +762,7 @@ struct menc {
 	bool wait_secure;
 	menc_sess_h *sessh;
 	menc_media_h *mediah;
+	menc_txrekey_h *txrekeyh;
 };
 
 void menc_register(struct list *mencl, struct menc *menc);
@@ -1384,6 +1389,7 @@ struct stream *audio_strm(const struct audio *au);
 uint64_t audio_jb_current_value(const struct audio *au);
 int  audio_set_bitrate(struct audio *au, uint32_t bitrate);
 bool audio_rxaubuf_started(const struct audio *au);
+int  audio_update(struct audio *a);
 int  audio_start(struct audio *a);
 int  audio_start_source(struct audio *a, struct list *ausrcl,
 			struct list *aufiltl);

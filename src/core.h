@@ -327,6 +327,7 @@ void stream_set_rtcp_interval(struct stream *s, uint32_t n);
 void stream_set_srate(struct stream *s, uint32_t srate_tx, uint32_t srate_rx);
 bool stream_is_ready(const struct stream *strm);
 int  stream_print(struct re_printf *pf, const struct stream *s);
+void stream_remove_menc_media_state(struct stream *strm);
 enum media_type stream_type(const struct stream *strm);
 enum sdp_dir stream_ldir(const struct stream *s);
 struct rtp_sock *stream_rtp_sock(const struct stream *strm);
@@ -405,6 +406,7 @@ struct uag {
 struct config_sip *uag_cfg(void);
 const char *uag_eprm(void);
 bool uag_delayed_close(void);
+sip_msg_h *uag_subh(void);
 int uag_raise(struct ua *ua, struct le *le);
 
 void u32mask_enable(uint32_t *mask, uint8_t bit, bool enable);

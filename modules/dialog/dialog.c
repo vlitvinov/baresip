@@ -1,5 +1,5 @@
 /**
- * @file dialog.c Message Waiting Indication (RFC 3842)
+ * @file dialog.c Event Dialog Subscriptions (RFC 4235)
  *
  * Copyright (C) 2024 Viktor Litvinov
  */
@@ -253,11 +253,57 @@ static void tmr_handler(void *arg)
 }
 
 
+static int print_subs(struct re_printf *pf, void *arg)
+{
+	(void)arg;
+	int err = 0;
+	struct le *le;
+
+	err = re_hprintf(pf, "\n--- Dialogs subscriptions (%u) ---\n",
+			 list_count(&dialogl));
+
+	for (le = dialogl.head; le; le = le->next) {
+
+		struct dialog *dialog = le->data;
+		struct sipsub *subs = dialog->sub;
+
+		err = re_hprintf(pf, "%s -> %s", account_aor(ua_account(dialog->ua)),
+				 contact_uri(dialog->contact));
+
+		if (sipevent_failed(subs)) {
+			err |= re_hprintf(pf, "TERMINATED\n");
+		} else if (sipevent_subscribed(subs)) {
+			err |= re_hprintf(pf, "SUBSCRIBED epxires %d\n",sipevent_expires(subs));
+		} else {
+			err |= re_hprintf(pf, "PENDING\n");
+		}
+	}
+
+	err |= re_hprintf(pf, "\n");
+
+	return err;
+}
+
+
+static const struct cmd cmdv[] = {
+	{"dialogs", 0, 0, "Dialog subscriptions list", print_subs },
+};
+
+
 static int module_init(void)
 {
+	int err = 0;
 	list_init(&dialogl);
 
-	return uag_event_register(ua_event_handler, NULL);
+	err = cmd_register(baresip_commands(), cmdv, RE_ARRAY_SIZE(cmdv));
+	if (err)
+		return err;
+
+	err = uag_event_register(ua_event_handler, NULL);
+	if (err)
+		return err;
+
+	return err;
 }
 
 

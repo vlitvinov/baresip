@@ -34,6 +34,7 @@
 #    ;prio={0,1,2,3,...}
 #    ;rwait=90
 #    ;pubint=0 (publishing off)
+#    ;subint=600
 #    ;regq=0.5
 #    ;rtcp_mux={yes, no}  # default: no
 #    ;sipnat={outbound}

@@ -108,9 +108,9 @@ static int mwi_subscribe(struct ua *ua)
 
 	err = sipevent_subscribe(&mwi->sub, uag_sipevent_sock(), aor,
 				 NULL, aor, "message-summary", NULL,
-	                         600, ua_cuser(ua),
+				 account_subint(ua_account(ua)), ua_cuser(ua),
 				 routev, routev[0] ? 1 : 0,
-	                         auth_handler, ua_account(ua), true, NULL,
+				 auth_handler, ua_account(ua), true, NULL,
 				 notify_handler, close_handler, mwi,
 				 "Accept:"
 				 " application/simple-message-summary\r\n");

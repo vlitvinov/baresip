@@ -236,7 +236,7 @@ static int subscribe(struct presence *pres)
 	err = sipevent_subscribe(&pres->sub, uag_sipevent_sock(),
 				 contact_uri(pres->contact), NULL,
 				 account_aor(ua_account(ua)),
-				 "presence", NULL, 600,
+				 "presence", NULL, account_subint(ua_account(ua)),
 				 ua_cuser(ua), routev, routev[0] ? 1 : 0,
 				 auth_handler, ua_account(ua), true, NULL,
 				 notify_handler, close_handler, pres,

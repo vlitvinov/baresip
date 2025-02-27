@@ -504,6 +504,8 @@ static int sip_params_decode(struct account *acc, const struct sip_addr *aor)
 	err |= param_u32(&acc->fbregint, &aor->params, "fbregint");
 	acc->pubint = 0;
 	err |= param_u32(&acc->pubint, &aor->params, "pubint");
+	acc->subint = 600;
+	err |= param_u32(&acc->subint, &aor->params, "subint");
 	u32  = 0;
 	err |= param_u32(&u32, &aor->params, "tcpsrcport");
 	if (u32) {
@@ -1325,6 +1327,19 @@ uint32_t account_pubint(const struct account *acc)
 
 
 /**
+ * Get the Subscription interval of an account
+ *
+ * @param acc User-Agent account
+ *
+ * @return Subcription interval in [seconds]
+ */
+uint32_t account_subint(const struct account *acc)
+{
+	return acc ? acc->subint : 0;
+}
+
+
+/**
  * Get the answermode of an account
  *
  * @param acc User-Agent account
@@ -2072,6 +2087,7 @@ int account_debug(struct re_printf *pf, const struct account *acc)
 	err |= re_hprintf(pf, " regint:       %u\n", acc->regint);
 	err |= re_hprintf(pf, " prio:         %u\n", acc->prio);
 	err |= re_hprintf(pf, " pubint:       %u\n", acc->pubint);
+	err |= re_hprintf(pf, " subint:       %u\n", acc->subint);
 	err |= re_hprintf(pf, " regq:         %s\n", acc->regq);
 	err |= re_hprintf(pf, " inreq_allowed:%s\n",
 			  inreq_mode_str(acc->inreq_mode));

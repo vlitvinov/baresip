@@ -77,6 +77,7 @@ static int account_write_template(const char *file)
 			 "#    ;prio={0,1,2,3,...}\n"
 			 "#    ;rwait=90\n"
 			 "#    ;pubint=0 (publishing off)\n"
+			 "#    ;subint=600\n"
 			 "#    ;regq=0.5\n"
 			 "#    ;sipnat={outbound}\n"
 			 "#    ;stunuser=STUN/TURN/ICE-username\n"
